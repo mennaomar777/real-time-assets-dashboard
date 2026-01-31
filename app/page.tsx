@@ -4,10 +4,13 @@ import AssetsTable from "./_components/assetsTable/AssetsTable";
 import { AssetType } from "./_interfaces/asset";
 import { data } from "./_lib/data";
 import Sort from "./_components/sort/Sort";
+import Filter from "./_components/filter/Filter";
 
 export default function Home() {
   const [assets, setAssets] = useState<AssetType[]>(data);
   const [sortBy, setSortBy] = useState<string>("");
+  const [filterBy, setFilterBy] = useState<string>("");
+
   let newAssets: AssetType[] = structuredClone(assets);
 
   // Sort
@@ -19,6 +22,10 @@ export default function Home() {
     newAssets = newAssets.sort((a, b) => a.change - b.change);
   if (sortBy === "change-desc")
     newAssets = newAssets.sort((a, b) => b.change - a.change);
+
+  // Filter
+  if (filterBy)
+    newAssets = newAssets.filter((asset) => asset.category === filterBy);
 
   return (
     <main>
@@ -32,8 +39,9 @@ export default function Home() {
               Total assets: {assets.length}
             </p>
           </div>
-          <div>
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
             <Sort onSort={setSortBy} />
+            <Filter onFilter={setFilterBy} />
           </div>
         </div>
 
