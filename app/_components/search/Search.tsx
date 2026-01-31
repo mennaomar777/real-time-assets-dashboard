@@ -30,7 +30,7 @@ export default function Search({
         text-sm
         focus:outline-none
         focus:ring-2 focus:ring-blue-400
-        w-70
+        w-70 md:w-full
       "
         placeholder="Search assets..."
         value={value}

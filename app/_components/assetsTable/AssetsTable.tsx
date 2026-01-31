@@ -12,7 +12,8 @@ export default function AssetsTable({ assets }: { assets: AssetType[] }) {
 
   return (
     <div className="my-5 w-full">
-      <div className="w-full">
+      {/* Table for tablet & desktop */}
+      <div className="hidden md:block w-full">
         <table className="w-full shadow-lg my-5">
           <thead className="bg-gray-50">
             <tr>
@@ -56,6 +57,30 @@ export default function AssetsTable({ assets }: { assets: AssetType[] }) {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Cards for mobile */}
+      <div className="md:hidden flex flex-col gap-4 my-5">
+        {assets.map((asset) => (
+          <div
+            key={asset.id}
+            className="bg-white shadow-md rounded-lg p-4 flex flex-col gap-2"
+          >
+            <div className="flex justify-between items-center">
+              <h3 className="font-semibold text-gray-800">{asset.name}</h3>
+              <span
+                className={`font-semibold ${asset.change > 0 ? "text-green-600" : "text-red-600"}`}
+              >
+                {asset.change.toFixed(2)}%
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <p className="text-gray-600">${asset.price.toFixed(2)}</p>
+              <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">
+                {asset.category}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
